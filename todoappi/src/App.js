@@ -1,5 +1,8 @@
 import React from 'react';
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Container from 'react-bootstrap/Container';
+
 import './App.css';
 import TodoLista from './TodoLista';
 
@@ -23,22 +26,22 @@ export default class App extends React.Component {
     render() {
         if (this.state.virheViesti) {
             return (
-                <div>
+                <Container>
                     Virhe: {this.state.virheViesti}
-                </div>
+                </Container>
             );
         }
         const data = this.state.iteemit;
         console.log(data);
         return (
-            <div className="App">
+            <Container>
                 <TodoLista
                     iteemit={data}
                     merkitseTehtavaTehdyksi={
                         (id) => this.merkitseTehtavaTehdyksiRajapinnassa(id)
                     }
                 />
-            </div>
+            </Container>
         );
     }
 
