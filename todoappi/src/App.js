@@ -34,13 +34,21 @@ export default class App extends React.Component {
             <div className="App">
                 <TodoLista
                     iteemit={data}
-                    merkitseTehtavaTehdyksi={this.merkitseTehtavaTehdyksiRajapinnassa}
-                    />
+                    merkitseTehtavaTehdyksi={
+                        (id) => this.merkitseTehtavaTehdyksiRajapinnassa(id)
+                    }
+                />
             </div>
         );
     }
 
     merkitseTehtavaTehdyksiRajapinnassa(id) {
-        console.log("TEHTY", id);
+        axios.patch(`http://127.0.0.1:8000/api/tehtavat/${id}/`, {
+            tehty: true
+        })
+            .then(() => this.componentDidMount())
+            .catch(error => {
+                this.setState({virheViesti: error.message});
+            });
     }
 }
