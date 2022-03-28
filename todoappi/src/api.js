@@ -4,7 +4,8 @@ export function kirjaudu(kayttaja, salasana) {
     axios.defaults.auth = {
         username: kayttaja,
         password: salasana
-    }
+    };
+    return true;
 }
 
 export function haeTehtavat() {
