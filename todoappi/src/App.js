@@ -1,9 +1,11 @@
 import React from 'react';
-import axios from 'axios';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
 
 import './App.css';
+
+import * as api from './api';
 import TodoLista from './TodoLista';
 
 export default class App extends React.Component {
@@ -13,7 +15,7 @@ export default class App extends React.Component {
     }
 
     componentDidMount() {
-        axios.get(`http://127.0.0.1:8000/api/tehtavat/`)
+        api.haeTehtavat()
             .then((res) => {
                 const iteemit = res.data;
                 this.setState({iteemit});
@@ -46,9 +48,7 @@ export default class App extends React.Component {
     }
 
     merkitseTehtavaTehdyksiRajapinnassa(id) {
-        axios.patch(`http://127.0.0.1:8000/api/tehtavat/${id}/`, {
-            tehty: true
-        })
+        api.merkitseTehdyksi(id)
             .then(() => this.componentDidMount())
             .catch(error => {
                 this.setState({virheViesti: error.message});
