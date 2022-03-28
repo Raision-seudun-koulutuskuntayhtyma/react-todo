@@ -20,6 +20,10 @@ tai
 Myös sulut parametrien ympärillä on vapaaehtoiset, jos parametreja on vain yksi:
 
     parametri => koodi
+
+On myös JavaScriptin vanhempi tapa kirjoittaa anonyymi funktio
+
+   function(parametrit) { koodi; }
 */
 
 function main() {
@@ -32,6 +36,8 @@ function main() {
     teeAsiaKahteenKertaan(
         () => teeAsiaKolmeenKertaan(sanoMoi)
     );
+
+    teeAsiaKahteenKertaan(function() {console.log("heips");});
 }
 
 function sanoMoi() {
