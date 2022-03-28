@@ -28,6 +28,7 @@ function TodoLista(props) {
             {props.iteemit.map(
                 (x) => (
                     <TodoIteemi
+                        key={x.id}
                         id={x.id}
                         otsikko={x.otsikko}
                         tehty={x.tehty}
