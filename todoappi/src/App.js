@@ -15,6 +15,7 @@ export default class App extends React.Component {
     }
 
     componentDidMount() {
+        api.kirjaudu("admin", "admin");
         api.haeTehtavat()
             .then((res) => {
                 const iteemit = res.data;
