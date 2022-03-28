@@ -7,6 +7,7 @@ import './App.css';
 
 import * as api from './api';
 import TodoLista from './TodoLista';
+import Kirjautumisdialogi from './Kirjautumisdialogi';
 
 export default class App extends React.Component {
     state = {
@@ -15,17 +16,15 @@ export default class App extends React.Component {
         kirjauduttu: false
     }
 
-    componentDidMount() {
-        if (this.state.kirjauduttu) {
-            api.haeTehtavat()
-                .then((res) => {
-                    const iteemit = res.data;
-                    this.setState({iteemit});
-                })
-                .catch((error) => {
-                    this.setState({virheViesti: error.message});
-                });
-        }
+    lataaTehtavat() {
+        api.haeTehtavat()
+            .then((res) => {
+                const iteemit = res.data;
+                this.setState({iteemit});
+            })
+            .catch((error) => {
+                this.setState({virheViesti: error.message});
+            });
     }
 
     render() {
@@ -39,12 +38,19 @@ export default class App extends React.Component {
 
         if (!this.state.kirjauduttu) {
             return (
-                <div>Login dialog</div>
+                <Kirjautumisdialogi kirjaudu={
+                    (kayttaja, salasana) => {
+                        const onnistuiko = api.kirjaudu(kayttaja, salasana);
+                        this.setState({kirjauduttu: onnistuiko});
+                        if (onnistuiko) {
+                            this.lataaTehtavat();
+                        }
+                    }
+                }/>
             );
         }
 
         const data = this.state.iteemit;
-        console.log(data);
         return (
             <Container>
                 <TodoLista
