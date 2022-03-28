@@ -11,19 +11,21 @@ import TodoLista from './TodoLista';
 export default class App extends React.Component {
     state = {
         iteemit: [],
-        virheViesti: null
+        virheViesti: null,
+        kirjauduttu: false
     }
 
     componentDidMount() {
-        api.kirjaudu("admin", "admin");
-        api.haeTehtavat()
-            .then((res) => {
-                const iteemit = res.data;
-                this.setState({iteemit});
-            })
-            .catch((error) => {
-                this.setState({virheViesti: error.message});
-            });
+        if (this.state.kirjauduttu) {
+            api.haeTehtavat()
+                .then((res) => {
+                    const iteemit = res.data;
+                    this.setState({iteemit});
+                })
+                .catch((error) => {
+                    this.setState({virheViesti: error.message});
+                });
+        }
     }
 
     render() {
@@ -34,6 +36,13 @@ export default class App extends React.Component {
                 </Container>
             );
         }
+
+        if (!this.state.kirjauduttu) {
+            return (
+                <div>Login dialog</div>
+            );
+        }
+
         const data = this.state.iteemit;
         console.log(data);
         return (
