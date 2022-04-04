@@ -6,8 +6,8 @@ import Container from 'react-bootstrap/Container';
 import './App.css';
 
 import * as api from './api';
-import TodoLista from './TodoLista';
-import Kirjautumisdialogi from './Kirjautumisdialogi';
+import TodoLista from './components/TodoLista';
+import Kirjautumisdialogi from './components/Kirjautumisdialogi';
 
 export default class App extends React.Component {
     state = {
