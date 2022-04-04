@@ -1,11 +1,13 @@
 import axios from 'axios';
 
 export function kirjaudu(kayttaja, salasana) {
-    axios.defaults.auth = {
+    return axios.post("http://127.0.0.1:8000/auth/token/login", {
         username: kayttaja,
         password: salasana
-    };
-    return true;
+    }).then((result) => {
+        const token = result.data.auth_token;
+        axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+    });
 }
 
 export function haeTehtavat() {

@@ -40,11 +40,14 @@ export default class App extends React.Component {
             return (
                 <Kirjautumisdialogi kirjaudu={
                     (kayttaja, salasana) => {
-                        const onnistuiko = api.kirjaudu(kayttaja, salasana);
-                        this.setState({kirjauduttu: onnistuiko});
-                        if (onnistuiko) {
-                            this.lataaTehtavat();
-                        }
+                        api.kirjaudu(kayttaja, salasana)
+                            .then(() => {
+                                this.setState({kirjauduttu: true});
+                                this.lataaTehtavat();
+                            })
+                            .catch((error) => {
+                                this.setState({virheViesti: error.message});
+                            });
                     }
                 }/>
             );
