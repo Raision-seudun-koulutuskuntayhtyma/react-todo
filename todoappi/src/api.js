@@ -32,6 +32,11 @@ export function palautaKirjautuminen() {
     }
 }
 
+export function kirjauduUlos() {
+    localStorage.removeItem("token");
+    axios.defaults.headers.common['Authorization'] = undefined;
+}
+
 export function haeTehtavat() {
     return axios.get(`http://127.0.0.1:8000/api/tehtavat/`);
 }

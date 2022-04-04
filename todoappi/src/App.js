@@ -2,6 +2,7 @@ import React from 'react';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Alert from 'react-bootstrap/Alert';
+import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 
 import './App.css';
@@ -43,7 +44,14 @@ export default class App extends React.Component {
             </Alert>
         ) : null;
 
-        const kirjautumisKomponentti = (this.state.kirjauduttu) ? null : (
+        const kirjautumisKomponentti = (this.state.kirjauduttu) ? (
+            <Button onClick={() => {
+                api.kirjauduUlos();
+                this.setState({kirjauduttu: false, iteemit: []});
+            }}>
+                Kirjaudu ulos
+            </Button>
+        ) : (
             <Kirjautumisdialogi kirjaudu={
                 (kayttaja, salasana) => {
                     api.kirjaudu(kayttaja, salasana)
