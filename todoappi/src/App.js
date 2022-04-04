@@ -16,6 +16,14 @@ export default class App extends React.Component {
         kirjauduttu: false
     }
 
+    componentDidMount() {
+        const kirjauduttu = api.palautaKirjautuminen();
+        if (kirjauduttu) {
+            this.setState({kirjauduttu: true});
+            this.lataaTehtavat();
+        }
+    }
+
     lataaTehtavat() {
         api.haeTehtavat()
             .then((res) => {

@@ -6,8 +6,30 @@ export function kirjaudu(kayttaja, salasana) {
         password: salasana
     }).then((result) => {
         const token = result.data.auth_token;
-        axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+        asetaToken(token);
+        tallennaKirjautuminen(token);
     });
+}
+
+function asetaToken(token) {
+    // Aseta annettu token axios-kirjastolle Authorization-headeriin
+    axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+}
+
+function tallennaKirjautuminen(token) {
+    // Tallenna token local-storageen
+    localStorage.setItem("token", token);
+}
+
+export function palautaKirjautuminen() {
+    // Lataa token local-storagesta, jos on tallennettuna
+    const token = localStorage.getItem("token");
+    if (token) {
+        asetaToken(token);
+        return true;
+    } else {
+        return false;
+    }
 }
 
 export function haeTehtavat() {
